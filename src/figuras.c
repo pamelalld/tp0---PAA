@@ -1,20 +1,23 @@
 #ifndef FIGURAS
 #define FIGURAS
 
-#include <stdio.h>
+#include "figuras.h"
+
+#include<stdlib.h>
+#include<stdio.h>
 #include <time.h>
-#include "tipoPincel.h"
-#include <stdlib.h>
+#include <string.h>
+#include <stdbool.h>
 
-void criaQuadroVazio (int linhas,int colunas, TipoPincel quadro[linhas][colunas]){
+void criaQuadroVazio (tipoFigura quadro[LINHAS][COLUNAS]){
 
-    for(int i=0;i<linhas;i++){
-        for (int j=0;j<colunas;j++){
-            if (i==0 || i==linhas-1){
+    for(int i=0;i<LINHAS;i++){
+        for (int j=0;j<COLUNAS;j++){
+            if (i==0 || i==LINHAS-1){
                 quadro[i][j].caractere='-';
                 quadro[i][j].tipoFig='n';
             }
-            else if (j==0 || j==colunas-1){
+            else if (j==0 || j==COLUNAS-1){
                 quadro[i][j].caractere='|';
                 quadro[i][j].tipoFig='n';
             }
@@ -24,6 +27,40 @@ void criaQuadroVazio (int linhas,int colunas, TipoPincel quadro[linhas][colunas]
             }
         }
     }
+}
+
+
+tipoFigura* inicializaX(int id){
+
+    tipoFigura *item;
+    item = (tipoFigura*) malloc (sizeof(tipoFigura));
+    item->caractere='*';
+    item->tipoFig='x';
+    item->idFigura=id;
+
+    return item;
+}
+tipoFigura* inicializaPonto(int id){
+
+    tipoFigura *item;
+    item = (tipoFigura*) malloc (sizeof(tipoFigura));
+    item->caractere='*';
+    item->tipoFig='*';
+    item->idFigura=id;
+
+    return item;
+
+}
+tipoFigura* inicializaCruz(int id){
+
+    tipoFigura *item;
+    item = (tipoFigura*) malloc (sizeof(tipoFigura));
+    item->caractere='*';
+    item->tipoFig='+';
+    item->idFigura=id;
+
+    return item;
+
 }
 
 void sorteiaCores(int quant, int vetorID[], int vetorCores[]){
@@ -39,7 +76,13 @@ void sorteiaCores(int quant, int vetorID[], int vetorCores[]){
 
 }
 
+int sorteiaQuantFiguras(){
+    return (rand() % 101);
+}
+
 void selecionaCor(int id){
+
+    id=id%8;
 
     switch (id){
         case 0:
@@ -69,15 +112,15 @@ void selecionaCor(int id){
     }
 }
 
-void imprimeQuadro(int quantFiguras, int linhas, int colunas, TipoPincel quadro[linhas][colunas]){
+void imprimeQuadro(int quantFiguras, tipoFigura quadro[LINHAS][COLUNAS]){
 
     int listaIds[quantFiguras];
     int listaCores[quantFiguras];
 
     sorteiaCores(quantFiguras,listaIds,listaCores);
 
-    for (int i=0;i<linhas;i++){
-        for (int j=0;j<colunas;j++){
+    for (int i=0;i<LINHAS;i++){
+        for (int j=0;j<COLUNAS;j++){
             if (quadro[i][j].tipoFig=='n'){
                 printf("%c",quadro[i][j].caractere);
             }
@@ -92,14 +135,14 @@ void imprimeQuadro(int quantFiguras, int linhas, int colunas, TipoPincel quadro[
     }
 }
 
-void insereAsterisco(int quantidade,int linhas,int colunas,TipoPincel quadro[linhas][colunas],int* id){
-  
+void insereAsterisco(int quantidade,tipoFigura quadro[LINHAS][COLUNAS],int* id){
+
     int count=0;
-    TipoPincel* pixel;
+    tipoFigura* pixel;
 
     while(count<quantidade){
-        int i = rand()%linhas;
-        int j = rand()%colunas;
+        int i = rand()%LINHAS;
+        int j = rand()%COLUNAS;
 
         if (quadro[i][j].caractere==' '){
             pixel = inicializaPonto(*id);
@@ -110,14 +153,14 @@ void insereAsterisco(int quantidade,int linhas,int colunas,TipoPincel quadro[lin
     }
 }
 
-void insereCruz(int quantidade,int linhas,int colunas,TipoPincel quadro[linhas][colunas],int* id){
-  
+void insereCruz(int quantidade,tipoFigura quadro[LINHAS][COLUNAS],int* id){
+
     int count=0;
-    TipoPincel* pixel;
+    tipoFigura* pixel;
 
     while(count<quantidade){
-        int i = rand()%linhas;
-        int j = rand()%colunas;
+        int i = rand()%LINHAS;
+        int j = rand()%COLUNAS;
 
         if (quadro[i][j].caractere==' ' && quadro[i][j-1].caractere==' ' && quadro[i][j+1].caractere==' ' && quadro[i+1][j].caractere==' ' && quadro[i-1][j].caractere==' ' ){
             pixel = inicializaCruz(*id);
@@ -133,14 +176,14 @@ void insereCruz(int quantidade,int linhas,int colunas,TipoPincel quadro[linhas][
 
 }
 
-void insereX(int quantidade,int linhas,int colunas,TipoPincel quadro[linhas][colunas],int* id){
-  
+void insereX(int quantidade,tipoFigura quadro[LINHAS][COLUNAS],int* id){
+
     int count=0;
-    TipoPincel* pixel;
+    tipoFigura* pixel;
 
     while(count<quantidade){
-        int i = rand()%linhas;
-        int j = rand()%colunas;
+        int i = rand()%LINHAS;
+        int j = rand()%COLUNAS;
 
         if (quadro[i][j].caractere==' ' && quadro[i-1][j-1].caractere==' ' && quadro[i-1][j+1].caractere==' ' && quadro[i+1][j-1].caractere==' ' && quadro[i+1][j+1].caractere==' ' ){
             pixel=inicializaX(*id);
@@ -156,7 +199,7 @@ void insereX(int quantidade,int linhas,int colunas,TipoPincel quadro[linhas][col
 
 }
 
-void sorteiaFigura (int quantidade,int linhas,int colunas,TipoPincel quadro[linhas][colunas],int* id){
+void sorteiaFigura (int quantidade,tipoFigura quadro[LINHAS][COLUNAS],int* id){
 
     int figura;
 
@@ -166,32 +209,22 @@ void sorteiaFigura (int quantidade,int linhas,int colunas,TipoPincel quadro[linh
 
         switch (figura){
             case 0:
-                insereAsterisco(1,linhas,colunas,quadro,id);
+                insereAsterisco(1,quadro,id);
                 break;
             case 1:
-                insereCruz(1,linhas,colunas,quadro,id);
+                insereCruz(1,quadro,id);
                 break;
             case 2:
-                insereX(1,linhas,colunas,quadro,id);
+                insereX(1,quadro,id);
                 break;
         }
         quantidade--;
     }
 }
 
-// int main(){
-
-//     TipoPincel quadro[20][80];
-//     int quant=0;
-//     srand(time(NULL));
-
-//     scanf("%d",&quant);
-
-//     criaQuadroVazio(20,80,quadro);
-//     insereX(quant,20,80,quadro);
-//     imprimeQuadro(quant,20,80,quadro);
-//     return 0;
-
-// }
+void resetarQuadro(tipoFigura quadro[LINHAS][COLUNAS], int *id) {
+    *id = 0;
+    criaQuadroVazio(quadro);
+}
 
 #endif
