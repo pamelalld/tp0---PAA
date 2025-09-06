@@ -1,7 +1,7 @@
 #ifndef FIGURAS
 #define FIGURAS
 
-#include "figuras.h"
+#include "../include/figuras.h"
 
 #include<stdlib.h>
 #include<stdio.h>
@@ -63,13 +63,12 @@ tipoFigura* inicializaCruz(int id){
 
 }
 
-void sorteiaCores(int quant, int vetorID[], int vetorCores[]){
+void sorteiaCores(int quant, int vetorCores[]){
 
     int aux=0;
 
     for (int i=0;i<quant;i++){
         aux = rand()%8;
-        vetorID[i]=i;
         vetorCores[i]=aux;
 
     }
@@ -77,7 +76,7 @@ void sorteiaCores(int quant, int vetorID[], int vetorCores[]){
 }
 
 int sorteiaQuantFiguras(){
-    return (rand() % 101);
+    return (rand() % 101+1);
 }
 
 void selecionaCor(int id){
@@ -114,10 +113,9 @@ void selecionaCor(int id){
 
 void imprimeQuadro(int quantFiguras, tipoFigura quadro[LINHAS][COLUNAS]){
 
-    int listaIds[quantFiguras];
     int listaCores[quantFiguras];
 
-    sorteiaCores(quantFiguras,listaIds,listaCores);
+    sorteiaCores(quantFiguras,listaCores); //determina uma cor para cada id de figura
 
     for (int i=0;i<LINHAS;i++){
         for (int j=0;j<COLUNAS;j++){
@@ -125,7 +123,7 @@ void imprimeQuadro(int quantFiguras, tipoFigura quadro[LINHAS][COLUNAS]){
                 printf("%c",quadro[i][j].caractere);
             }
             else{
-                selecionaCor(listaCores[quadro[i][j].idFigura]);
+                selecionaCor(listaCores[quadro[i][j].idFigura]); //recupera a cor associada ao id
                 printf("%c",quadro[i][j].caractere);
                 printf("\033[0m");
             }
@@ -160,11 +158,13 @@ void insereCruz(int quantidade,tipoFigura quadro[LINHAS][COLUNAS],int* id){
 
     while(count<quantidade){
         int i = rand()%LINHAS;
-        int j = rand()%COLUNAS;
+        int j = rand()%COLUNAS; //sorteia a posição em que a figura será inserida
 
-        if (quadro[i][j].caractere==' ' && quadro[i][j-1].caractere==' ' && quadro[i][j+1].caractere==' ' && quadro[i+1][j].caractere==' ' && quadro[i-1][j].caractere==' ' ){
-            pixel = inicializaCruz(*id);
-            quadro [i][j]=*pixel;
+        if (quadro[i][j].caractere==' ' && quadro[i][j-1].caractere==' ' && quadro[i][j+1].caractere==' ' 
+            && quadro[i+1][j].caractere==' ' && quadro[i-1][j].caractere==' ' ){  //verifica se não há colisões
+
+            pixel = inicializaCruz(*id);  
+            quadro [i][j]=*pixel;  //atribui cada pixel ao quadro
             quadro[i][j-1]=*pixel;
             quadro[i][j+1]=*pixel;
             quadro[i+1][j]=*pixel;

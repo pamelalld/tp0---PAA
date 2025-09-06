@@ -1,7 +1,7 @@
 #ifndef TIPO_CARTA
 #define TIPO_CARTA
 
-#include "cartas.h"
+#include "../include/cartas.h"
 
 #include<stdlib.h>
 #include<stdio.h>
@@ -89,7 +89,7 @@ Carta* inicializaEspada(char simbolo) {
 }
 
 int sorteiaQuantCartas(){
-    return (rand() % 31);
+    return (rand() % 31+1);
 }
 
 void mesaVazia(Mesa mesa[LINHAS][COLUNAS]) {

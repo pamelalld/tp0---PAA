@@ -1,5 +1,5 @@
-#include "figuras.h"
-#include "cartas.h"
+#include "../include/figuras.h"
+#include "../include/cartas.h"
 
 #include<stdlib.h>
 #include<stdio.h>
@@ -38,20 +38,24 @@ int main(){
 
         case 1:
             do{
-                
-                if (quantFigura<=0) quantFigura=sorteiaQuantFiguras();
+                if (quantFigura>100) quantFigura=100;
+                else if (quantFigura<=0) quantFigura=sorteiaQuantFiguras();
                 resetarQuadro(quadro,&id);
                 insereAsterisco(quantFigura,quadro,&id);
+                printf("Valores: tipo de figura 1, numero de figuras: %d\n",quantFigura);
                 imprimeQuadro(quantFigura,quadro);
                 printf("Gostaria de fazer um novo quadro com esses mesmos valores?\n1-SIM\n2-NAO\n");
                 scanf("%d",&repetir);
             } while (repetir==1);
+            printf("Obrigado por usar o Programa Gerador de Obra de Arte! :)\n");
             break;
         case 2:
             do{
-                if (quantFigura<=0) quantFigura=sorteiaQuantFiguras();
+                if (quantFigura>100) quantFigura=100;
+                else if (quantFigura<=0) quantFigura=sorteiaQuantFiguras();
                 resetarQuadro(quadro,&id);
                 insereCruz(quantFigura,quadro,&id);
+                printf("Valores: tipo de figura 2, numero de figuras: %d\n",quantFigura);
                 imprimeQuadro(quantFigura,quadro);
                 printf("Gostaria de fazer um novo quadro com esses mesmos valores?\n1-SIM\n2-NAO\n");
                 scanf("%d",&repetir);
@@ -60,9 +64,11 @@ int main(){
             break;
         case 3:
             do{
-                if (quantFigura<=0) quantFigura=sorteiaQuantFiguras();
+                if (quantFigura>100) quantFigura=100;
+                else if (quantFigura<=0) quantFigura=sorteiaQuantFiguras();
                 resetarQuadro(quadro,&id);
                 insereX(quantFigura,quadro,&id);
+                printf("Valores: tipo de figura 3, numero de figuras: %d\n",quantFigura);
                 imprimeQuadro(quantFigura,quadro);
                 printf("Gostaria de fazer um novo quadro com esses mesmos valores?\n1-SIM\n2-NAO\n");
                 scanf("%d",&repetir);
@@ -71,9 +77,11 @@ int main(){
             break;
         case 4:
             do{
-                if (quantFigura<=0) quantFigura=sorteiaQuantFiguras();
+                if (quantFigura>100) quantFigura=100;
+                else if (quantFigura<=0) quantFigura=sorteiaQuantFiguras();
                 resetarQuadro(quadro,&id);
                 sorteiaFigura(quantFigura,quadro,&id);
+                printf("Valores: tipo de figura 4, numero de figuras: %d\n",quantFigura);
                 imprimeQuadro(quantFigura,quadro);
                 printf("Gostaria de fazer um novo quadro com esses mesmos valores?\n1-SIM\n2-NAO\n");
                 scanf("%d",&repetir);
@@ -82,13 +90,15 @@ int main(){
             break;
         default:
             do{
-                if (quantFigura<=0) quantFigura=sorteiaQuantCartas();
+                if (quantFigura>30) quantFigura=30;
+                else if (quantFigura<=0) quantFigura=sorteiaQuantCartas();
 
                 deck = sorteiaCartas(quantFigura);
                 divisaoCartas = divideCartas(quantFigura, &qntJogadores);
 
                 insereCartas(deck, quantFigura, mesa, divisaoCartas, &qntJogadores);
 
+                printf("Valores: tipo de figura 5, numero de figuras: %d\n",quantFigura);
                 imprimeMesa(mesa);
 
                 resetarMesa(mesa,&deck,&divisaoCartas,quantFigura);
